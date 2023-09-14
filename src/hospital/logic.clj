@@ -19,8 +19,27 @@
 ;        count
 ;        (< 5))))
 
+; exemplo para extrair com ex-data
+;(defn chega-em
+;  [hospital departamento pessoa]
+;  (if (cabe-na-fila? hospital departamento)
+;    (update hospital departamento conj pessoa)
+;    (throw (ex-info "Não cabe ninguém neste departamento." {:paciente pessoa :tipo :impossivel-adicionar-pessoa}))))
+
+(defn- tenta-colocar-na-fila
+    [hospital departamento pessoa]
+    (if (cabe-na-fila? hospital departamento)
+      (update hospital departamento conj pessoa)))
+
+
 (defn chega-em
   [hospital departamento pessoa]
-  (if (cabe-na-fila? hospital departamento)
-    (update hospital departamento conj pessoa)
-    (throw (IllegalStateException. "Não cabe ninguém neste departamento."))))
+  (if-let [novo-hospital (tenta-colocar-na-fila hospital departamento pessoa)]
+    {:hospital novo-hospital :resultado :sucesso}
+    {:hospital hospital :resultado :impossivel-adicionar-pessoa}))
+
+; antes de fazer swap chega-em, vai ter que tratar seu resultado
+; nao da pra fugir disso se o resultado é usado em átomos e para tratar erros.
+;(defn chega-em!
+;  [hospital departamento pessoa]
+;  (:hospital (chega-em hospital departamento pessoa)))

@@ -31,9 +31,9 @@
   ;        (chega-em {:espera [1 2 3 4]} :espera 5))))
 
   (testing "aceita pessoas enquanto cabem pessoas na fila"
-    (is (= {:espera [1 2 3 4 5]}
+    (is (= {:hospital {:espera [1 2 3 4 5]} :resultado :sucesso}
            (chega-em {:espera [1 2 3 4]} :espera 5)))
-    (is (= {:espera [1 2 5]}
+    (is (= {:hospital {:espera [1 2 5]} :resultado :sucesso}
            (chega-em {:espera [1 2]} :espera 5))))
 
   (testing "não aceita quando não cabe na fila"
@@ -46,5 +46,16 @@
     ;(is (thrown? java.lang.IllegalStateException
     ;                          (chega-em {:espera [1 35 42 64 21]} :espera 76)))))
 
-    (is (thrown? java.lang.IllegalStateException
-                 (chega-em {:espera [1 35 42 64 21]} :espera 76)))))
+    ;maneira de testar não usando o tipo da exception, e sim os dados da exception para isso
+    ; menos sensível que a mensagem de erro.
+    ;(is (try
+    ;      (chega-em {:espera [1 35 442 64 21]} :espera 76)
+    ;      false                                             ; se chegar até aqui, false
+    ;       (catch clojure.lang.ExceptionInfo e
+    ;         (= :impossivel-adicionar-pessoa (:tipo (ex-data e)))
+    ;         )))))
+
+    (is (= {:hospital {:espera [1 35 42 64 21]} :resultado :impossivel-adicionar-pessoa}
+           (chega-em {:espera [1 35 42 64 21]} :espera 76)))
+
+    ))
