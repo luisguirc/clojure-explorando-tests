@@ -2,7 +2,6 @@
 
 ; Test Driven Development
 ; Test Driven Design
-
 ; menos explicito, e qualquer um que der nulo vai causar devolver nulo
 (defn cabe-na-fila?
   [hospital departamento]
