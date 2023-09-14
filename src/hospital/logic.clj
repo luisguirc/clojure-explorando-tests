@@ -18,3 +18,7 @@
 ;    (-> fila
 ;        count
 ;        (< 5))))
+
+(defn chega-em
+  [hospital departamento pessoa]
+  (update hospital departamento conj pessoa))
