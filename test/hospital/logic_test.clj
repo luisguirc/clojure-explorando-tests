@@ -34,4 +34,17 @@
     (is (= {:espera [1 2 3 4 5]}
            (chega-em {:espera [1 2 3 4]} :espera 5)))
     (is (= {:espera [1 2 5]}
-           (chega-em {:espera [1 2]} :espera 5)))))
+           (chega-em {:espera [1 2]} :espera 5))))
+
+  (testing "não aceita quando não cabe na fila"
+    ; verificando que uma exception foi jogada.
+    ; código ruim, pois qualquer erro lança essa exception GENÉRICA
+    ;(is (thrown? clojure.lang.ExceptionInfo
+    ;             (chega-em {:espera [1 35 42 64 21]} :espera 76)))))
+
+    ;mesmo que eu escolha uma exception do genero, perigoso! pode ser causada por outra coisa.
+    ;(is (thrown? java.lang.IllegalStateException
+    ;                          (chega-em {:espera [1 35 42 64 21]} :espera 76)))))
+
+    (is (thrown? java.lang.IllegalStateException
+                 (chega-em {:espera [1 35 42 64 21]} :espera 76)))))

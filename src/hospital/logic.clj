@@ -21,4 +21,6 @@
 
 (defn chega-em
   [hospital departamento pessoa]
-  (update hospital departamento conj pessoa))
+  (if (cabe-na-fila? hospital departamento)
+    (update hospital departamento conj pessoa)
+    (throw (IllegalStateException. "Não cabe ninguém neste departamento."))))
