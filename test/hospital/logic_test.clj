@@ -6,7 +6,7 @@
 ; -1, +1, <=, >=, >, <, etc.
 
 (deftest cabe-na-fila?-test
-  (testing "Que cabe na fila"
+  (testing "Que cabe numa fila vazia"
     (is (cabe-na-fila? {:espera {}} :espera)))
 
   (testing "Que não cabe na fila quando a fila está cheia"
@@ -15,8 +15,9 @@
   (testing "Que não cabe na fila quando tem mais do que uma fila cheia"
     (is (not (cabe-na-fila? {:espera [1 2 3 4 5 6]} :espera))))
 
-  (testing "Que cabe na fila quando tem pouco menos do que uma fila cheia"
-    (is (cabe-na-fila? {:espera [1 2 3 4]} :espera)))
+  (testing "Que cabe na fila quando tem gente mas não está cheia"
+    (is (cabe-na-fila? {:espera [1 2 3 4]} :espera))
+    (is (cabe-na-fila? {:espera [1 2]} :espera)))
 
-  (testing "Que cabe na fila quando tem pouca gente na fila"
-    (is (cabe-na-fila? {:espera [1 2]} :espera))))
+  (testing "Que ... quando o departamento não existe"
+    (is (not (cabe-na-fila? {:espera [1 2 3 4]} :raio-x)))))
